@@ -26,6 +26,30 @@ object GamesDAO{
         }
     }
     
+    def update(db: Database, jog: Update): Unit = {
+        db.withConnection{ conn =>
+            val ps = conn.prepareStatement("update games set nome= ?, desenvolvedor= ?, genero= ?, plataforma= ?, ano= ? where id= ?")
+            ps.setString(1,jog.nome)
+            ps.setString(2,jog.desenvolvedor)
+            ps.setString(3,jog.genero)
+            ps.setString(4,jog.plataforma)
+            ps.setInt(5,jog.ano)
+            ps.setInt(6,jog.id)
+            ps.execute()
+        }
+    }
+    
+    def updateUsu(db: Database, usu: GamesUsu): Unit = {
+        db.withConnection{ conn =>
+            val ps = conn.prepareStatement("update usuario set nome= ?, email= ?, senha= ? where id= ?")
+            ps.setString(1,usu.nome)
+            ps.setString(2,usu.email)
+            ps.setString(3,usu.senha)
+            ps.setInt(4,usu.id)
+            ps.execute()
+        }
+    }
+    
     def getGame(db: Database, id: Int): Games = {
         db.withConnection{conn =>
             val ps = conn.prepareStatement("select * from games where id=?")
