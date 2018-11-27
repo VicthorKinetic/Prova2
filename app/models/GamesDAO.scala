@@ -15,4 +15,16 @@ object GamesDAO{
             ps.execute()
         }
     }
+    
+    def getGame(db: Database, id: Int): Games = {
+        db.withConnection{conn =>
+            val ps = conn.prepareStatement("select * from games where id=?")
+            ps.setInt(1,id)
+            val res = ps.executeQuery()
+            if(res.next())
+                Games(res.getInt(1),res.getString(2),res.getString(3),res.getString(4),res.getString(5),res.getInt(6))
+            else
+                Games(0,"","","","",0)
+        }
+    }
 }
