@@ -6,6 +6,8 @@ import play.api.mvc._
 import play.api.db.Database
 import scala.collection.mutable.MutableList
 import models.GamesDAO
+import models.UpdateUsu
+import models.Delete
 import models.Login
 import play.api.data._
 import play.api.data.Forms._
@@ -23,9 +25,30 @@ class LoginController @Inject()(db: Database, cc: ControllerComponents)
             "email" -> text,
             "senha" -> text
     )(Login.apply)(Login.unapply))
+    
+    val upForm: Form[UpdateUsu] = Form (
+        mapping(
+            "id" -> number,
+            "nome" -> text,
+            "email" -> text,
+            "senha" -> text,
+        )(UpdateUsu.apply)(UpdateUsu.unapply))
+    
+    val delForm: Form[Delete] = Form (
+        mapping(
+            "id" -> number
+        )(Delete.apply)(Delete.unapply))
   
   def form = Action {implicit request =>
     Ok(views.html.loginForm(loginForm))
+  }
+  
+  def formUp = Action {implicit request =>
+    Ok(views.html.usuUp(upForm))
+  }
+  
+  def formDel = Action {implicit request =>
+    Ok(views.html.usuDel(delForm))
   }
   
   def auth = Action {implicit request =>
@@ -40,6 +63,32 @@ class LoginController @Inject()(db: Database, cc: ControllerComponents)
         }else{
            Redirect("/login")
         }
+      }
+    )
+  }
+  
+  def updateUsu = Action {implicit request =>
+    upForm.bindFromRequest.fold(
+      formWithErrors => {
+        println(formWithErrors)
+        BadRequest(views.html.usuUp(formWithErrors))
+      },
+      updateUsu => {
+        GamesDAO.updateUsu(db,updateUsu)
+        Redirect("/")
+      }
+    )
+  }
+  
+  def deleteUsu = Action {implicit request =>
+    delForm.bindFromRequest.fold(
+      formWithErrors => {
+        println(formWithErrors)
+        BadRequest(views.html.usuDel(formWithErrors))
+      },
+      deleteUsu => {
+        GamesDAO.deleteUsu(db,deleteUsu)
+        Redirect("/")
       }
     )
   }
