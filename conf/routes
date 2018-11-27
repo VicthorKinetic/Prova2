@@ -17,7 +17,12 @@ POST    /gameDelete                 controllers.GamesController.delete
 
 GET     /usuarios                   controllers.GamesController.formUsu
 POST    /usuario                    controllers.GamesController.cadastro
+
 GET     /login                      controllers.LoginController.form
+GET     /usuario/update             controllers.LoginController.formUp
+GET     /usuario/delete             controllers.LoginController.formDel
+POST    /usuarioUpdate              controllers.LoginController.updateUsu
+POST    /usuarioDelete              controllers.LoginController.deleteUsu
 POST    /login                      controllers.LoginController.auth
 POST    /logout                     controllers.LoginController.logout
 
