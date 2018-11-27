@@ -11,6 +11,13 @@ GET     /game/form                  controllers.GamesController.formGames
 POST    /game                       controllers.GamesController.create
 GET     /game/info/:id              controllers.GamesController.info(id: Int)
 
+GET     /usuario                    controllers.GamesController.formUsu
+POST    /usuario                    controllers.GamesController.cadastro
+
+GET     /login                      controllers.LoginController.form
+POST    /login                      controllers.LoginController.auth
+POST    /logout                     controllers.LoginController.logout
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
