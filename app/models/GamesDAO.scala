@@ -16,6 +16,16 @@ object GamesDAO{
         }
     }
     
+    def createUsu(db: Database, usu: GamesUsu): Unit = {
+        db.withConnection{ conn =>
+            val ps = conn.prepareStatement("insert into usuario(nome,email,senha) values (?,?,?)")
+            ps.setString(1,usu.nome)
+            ps.setString(2,usu.email)
+            ps.setString(3,usu.senha)
+            ps.execute()
+        }
+    }
+    
     def getGame(db: Database, id: Int): Games = {
         db.withConnection{conn =>
             val ps = conn.prepareStatement("select * from games where id=?")
@@ -25,6 +35,16 @@ object GamesDAO{
                 Games(res.getInt(1),res.getString(2),res.getString(3),res.getString(4),res.getString(5),res.getInt(6))
             else
                 Games(0,"","","","",0)
+        }
+    }
+    
+    def autenticar (db: Database, login: Login): Boolean = {
+        db.withConnection{ conn =>
+            val ps = conn.prepareStatement("select * from usuario where email= ? and senha= ?")
+            ps.setString(1,login.email)
+            ps.setString(2,login.senha)
+            val rs = ps.executeQuery()
+            rs.next()
         }
     }
 }
