@@ -29,6 +29,14 @@ class GamesController @Inject()(db: Database, cc: ControllerComponents)
         )(Games.applyGame)(Games.unapplyGame)
     )
     
+    val gamesForm: Form[(String, String, String)] = Form (
+        mapping(
+            "nome" -> text,
+            "email" -> text,
+            "senha" -> text
+        )(Games.applyUsu)(Games.unapplyUsu)
+    )
+    
   def create = Action {implicit request =>
     form.bindFromRequest.fold(
       formWithErrors => {
@@ -42,6 +50,18 @@ class GamesController @Inject()(db: Database, cc: ControllerComponents)
     )
   }
   
+  def cadastro = Action {implicit request =>
+    gamesForm.bindFromRequest.fold(
+      formWithErrors => {
+        BadRequest(views.html.gamesForm(formWithErrors))
+      },
+      games => {
+        GamesDAO.createUsu(db,Games.criarUsuario(games._1,games._2,games._3))
+        Redirect("/")
+      }
+    )
+  }
+  
   def formGames = Action {implicit request =>
     Ok(views.html.games(form))
   }
@@ -49,6 +69,10 @@ class GamesController @Inject()(db: Database, cc: ControllerComponents)
   def info(id: Int) = Action {
     val g = GamesDAO.getGame(db,id)
     Ok(views.html.info(g))
+  }
+  
+  def formUsu = Action {implicit request =>
+    Ok(views.html.gamesForm(gamesForm))
   }
  
     def games = Action {
