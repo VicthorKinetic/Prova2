@@ -1,0 +1,21 @@
+@(dForm: Form[Login])(implicit request: RequestHeader, messagesProvider: MessagesProvider)
+
+@if(dForm.hasGlobalErrors) {
+  <ul>
+  @for(error <- dForm.globalErrors) {
+    <li>@error.format</li>
+  }
+  </ul>
+}
+
+@import helper._
+
+@helper.form(action = routes.LoginController.auth()) {
+  <!-- CROSS-SITE REQUEST FORGERY -->
+  @CSRF.formField                     
+  @helper.inputText(dForm("email")) 
+  @helper.inputPassword(dForm("senha")) 
+  <button type="submit">Send</button>
+}
+
+
