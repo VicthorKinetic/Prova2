@@ -6,6 +6,8 @@ case class Login(email: String, senha: String)
 
 case class Update(id:Int, nome: String, desenvolvedor: String, genero: String, plataforma: String, ano: Int)
 
+case class UpdateUsu(id:Int, nome: String, email: String, senha: String)
+
 case class Delete(id:Int)
 
 
@@ -59,5 +61,13 @@ object Games{
     
     def unapplyUsu(usu: (String,String,String)): Option[(String,String,String)] = {
         return Some(usu._1,usu._2,usu._3)
+    }
+    
+    def upUsu(id: Int, nome: String, email: String, senha: String): UpdateUsu = {
+        return new UpdateUsu(id,nome,email,senha)
+    }
+    
+    def delUsu(id: Int): Delete = {
+        return new Delete(id)
     }
 }
