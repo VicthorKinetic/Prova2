@@ -1,0 +1,25 @@
+@(dForm: Form[Update])(implicit request: RequestHeader, messagesProvider: MessagesProvider)
+
+@if(dForm.hasGlobalErrors) {
+  <ul>
+  @for(error <- dForm.globalErrors) {
+    <li>@error.format</li>
+  }
+  </ul>
+}
+
+@import helper._
+
+@helper.form(action = routes.GamesController.update()) {
+  <!-- CROSS-SITE REQUEST FORGERY -->
+  @CSRF.formField
+  @helper.inputText(dForm("id"))
+  @helper.inputText(dForm("nome"))
+  @helper.inputText(dForm("desenvolvedor"))
+  @helper.inputText(dForm("genero"))
+  @helper.inputText(dForm("plataforma"))
+  @helper.inputText(dForm("ano"))
+  <button type="submit">Send</button>
+}
+
+
