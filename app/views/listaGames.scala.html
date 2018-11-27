@@ -1,0 +1,16 @@
+@(list:Seq[Games])
+ 
+@main("ListaGames") {
+    <h1>Lista de Games</h1>
+    <table>
+    @for(t <- list) {
+        <tr>
+           <td>@t.nome</td>
+           <td>@t.desenvolvedor</td>
+           <td>@t.genero</td>
+           <td>@t.plataforma</td>
+           <td>@t.ano</td>
+        </tr> 
+    }
+    </table>
+}
