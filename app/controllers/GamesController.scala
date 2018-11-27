@@ -6,6 +6,7 @@ import play.api.mvc._
 import play.api.db.Database
 import scala.collection.mutable.MutableList
 import models.Games
+import models.Update
 import models.GamesDAO
 import play.api.data._
 import play.api.data.Forms._
@@ -29,6 +30,17 @@ class GamesController @Inject()(db: Database, cc: ControllerComponents)
         )(Games.applyGame)(Games.unapplyGame)
     )
     
+    val upForm: Form[Update] = Form (
+        mapping(
+            "id" -> number,
+            "nome" -> text,
+            "desenvolvedor" -> text,
+            "genero" -> text,
+            "plataforma" -> text,
+            "ano" -> number
+        )(Update.apply)(Update.unapply)
+    )
+    
     val gamesForm: Form[(String, String, String)] = Form (
         mapping(
             "nome" -> text,
@@ -50,6 +62,19 @@ class GamesController @Inject()(db: Database, cc: ControllerComponents)
     )
   }
   
+  def update = Action {implicit request =>
+    upForm.bindFromRequest.fold(
+      formWithErrors => {
+        println(formWithErrors)
+        BadRequest(views.html.gamesUp(formWithErrors))
+      },
+      update => {
+        GamesDAO.update(db,update)
+        Redirect("/games")
+      }
+    )
+  }
+  
   def cadastro = Action {implicit request =>
     gamesForm.bindFromRequest.fold(
       formWithErrors => {
@@ -62,13 +87,17 @@ class GamesController @Inject()(db: Database, cc: ControllerComponents)
     )
   }
   
+  def info(id: Int) = Action {
+    val g = GamesDAO.getGame(db,id)
+    Ok(views.html.info(g))
+  }
+  
   def formGames = Action {implicit request =>
     Ok(views.html.games(form))
   }
   
-  def info(id: Int) = Action {
-    val g = GamesDAO.getGame(db,id)
-    Ok(views.html.info(g))
+  def formUp = Action {implicit request =>
+    Ok(views.html.gamesUp(upForm))
   }
   
   def formUsu = Action {implicit request =>
