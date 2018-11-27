@@ -15,9 +15,8 @@ POST    /game                       controllers.GamesController.create
 POST    /gameUpdate                 controllers.GamesController.update
 POST    /gameDelete                 controllers.GamesController.delete
 
-GET     /usuario                    controllers.GamesController.formUsu
+GET     /usuarios                   controllers.GamesController.formUsu
 POST    /usuario                    controllers.GamesController.cadastro
-
 GET     /login                      controllers.LoginController.form
 POST    /login                      controllers.LoginController.auth
 POST    /logout                     controllers.LoginController.logout

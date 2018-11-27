@@ -39,7 +39,7 @@ object GamesDAO{
         }
     }
     
-    def updateUsu(db: Database, usu: GamesUsu): Unit = {
+    def updateUsu(db: Database, usu: UpdateUsu): Unit = {
         db.withConnection{ conn =>
             val ps = conn.prepareStatement("update usuario set nome= ?, email= ?, senha= ? where id= ?")
             ps.setString(1,usu.nome)
@@ -58,7 +58,7 @@ object GamesDAO{
         }
     }
     
-    def deleteUsu(db: Database, usu: GamesUsu): Unit = {
+    def deleteUsu(db: Database, usu: Delete): Unit = {
         db.withConnection{ conn =>
             val ps = conn.prepareStatement("delete from usuario where id= ?")
             ps.setInt(1,usu.id)
