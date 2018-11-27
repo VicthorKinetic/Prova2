@@ -7,6 +7,7 @@ import play.api.db.Database
 import scala.collection.mutable.MutableList
 import models.Games
 import models.Update
+import models.Delete
 import models.GamesDAO
 import play.api.data._
 import play.api.data.Forms._
@@ -19,8 +20,8 @@ import play.api.data.format.Formats._
 @Singleton
 class GamesController @Inject()(db: Database, cc: ControllerComponents) 
   extends AbstractController(cc) with play.api.i18n.I18nSupport {
-    
-  val form: Form[(String, String, String, String, Int)] = Form (
+  
+    val form: Form[(String, String, String, String, Int)] = Form (
         mapping(
             "nome" -> text,
             "desenvolvedor" -> text,
@@ -41,6 +42,12 @@ class GamesController @Inject()(db: Database, cc: ControllerComponents)
         )(Update.apply)(Update.unapply)
     )
     
+    val delForm: Form[Delete] = Form (
+        mapping(
+            "id" -> number
+        )(Delete.apply)(Delete.unapply)
+    )
+    
     val gamesForm: Form[(String, String, String)] = Form (
         mapping(
             "nome" -> text,
@@ -48,7 +55,7 @@ class GamesController @Inject()(db: Database, cc: ControllerComponents)
             "senha" -> text
         )(Games.applyUsu)(Games.unapplyUsu)
     )
-    
+  
   def create = Action {implicit request =>
     form.bindFromRequest.fold(
       formWithErrors => {
@@ -70,6 +77,19 @@ class GamesController @Inject()(db: Database, cc: ControllerComponents)
       },
       update => {
         GamesDAO.update(db,update)
+        Redirect("/games")
+      }
+    )
+  }
+  
+  def delete = Action {implicit request =>
+    delForm.bindFromRequest.fold(
+      formWithErrors => {
+        println(formWithErrors)
+        BadRequest(views.html.gamesDel(formWithErrors))
+      },
+      delete => {
+        GamesDAO.delete(db,delete)
         Redirect("/games")
       }
     )
@@ -100,33 +120,37 @@ class GamesController @Inject()(db: Database, cc: ControllerComponents)
     Ok(views.html.gamesUp(upForm))
   }
   
+  def formDel = Action {implicit request =>
+    Ok(views.html.gamesDel(delForm))
+  }
+  
   def formUsu = Action {implicit request =>
     Ok(views.html.gamesForm(gamesForm))
   }
+  
+  def games = Action {
  
-    def games = Action {
- 
-      val list = MutableList[Games]()
-      //conn representa a conexao de fato com o bd
-      db.withConnection { conn =>
-        val stm = conn.createStatement()
-        val res = stm.executeQuery("""
-        select 
-           * 
-        from 
-           games 
-        order by 
-            games.nome 
-        limit 10""")
-        while (res.next()) {
-          list.+=(Games(res.getInt(1)
-                    ,res.getString(2)
-                    ,res.getString(3)
-                    ,res.getString(4)
-                    ,res.getString(5)
-                    ,res.getInt(6)))
-        }
+    val list = MutableList[Games]()
+    //conn representa a conexao de fato com o bd
+    db.withConnection { conn =>
+      val stm = conn.createStatement()
+      val res = stm.executeQuery("""
+      select 
+         * 
+      from 
+         games 
+      order by 
+          games.nome 
+      limit 10""")
+      while (res.next()) {
+        list.+=(Games(res.getInt(1)
+                  ,res.getString(2)
+                  ,res.getString(3)
+                  ,res.getString(4)
+                  ,res.getString(5)
+                  ,res.getInt(6)))
       }
+    }
     Ok(views.html.listaGames(list))
   }
 }
