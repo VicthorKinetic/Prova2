@@ -7,9 +7,11 @@
 GET     /                           controllers.HomeController.index
 
 GET     /games                      controllers.GamesController.games
-GET     /game/form                  controllers.GamesController.formGames
-POST    /game                       controllers.GamesController.create
 GET     /game/info/:id              controllers.GamesController.info(id: Int)
+GET     /game/form                  controllers.GamesController.formGames
+GET     /game/update                controllers.GamesController.formUp
+POST    /game                       controllers.GamesController.create
+POST    /gameUpdate                 controllers.GamesController.update
 
 GET     /usuario                    controllers.GamesController.formUsu
 POST    /usuario                    controllers.GamesController.cadastro
