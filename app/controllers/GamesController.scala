@@ -45,6 +45,11 @@ class GamesController @Inject()(db: Database, cc: ControllerComponents)
   def formGames = Action {implicit request =>
     Ok(views.html.games(form))
   }
+  
+  def info(id: Int) = Action {
+    val g = GamesDAO.getGame(db,id)
+    Ok(views.html.info(g))
+  }
  
     def games = Action {
  
