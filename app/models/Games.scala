@@ -4,6 +4,8 @@ case class Games(id: Int, nome: String, desenvolvedor: String, genero: String, p
 
 case class Login(email: String, senha: String)
 
+case class Update(id:Int, nome: String, desenvolvedor: String, genero: String, plataforma: String, ano: Int)
+
 class GamesUsu(val _id: Int, val _nome: String, val _email: String, val _senha: String){
     def id = _id
     
@@ -22,6 +24,10 @@ object Games{
     
     def criarGame(nome: String, desenvolvedor: String, genero: String, plataforma: String, ano: Int): Games= {
         return new Games(0,nome,desenvolvedor,genero,plataforma,ano)
+    }
+    
+    def upGame(id: Int, nome: String, desenvolvedor: String, genero: String, plataforma: String, ano: Int): Update = {
+        return new Update(id,nome,desenvolvedor,genero,plataforma,ano)
     }
     
     def applyGame(nome: String, desenvolvedor: String, genero: String, plataforma: String, ano: Int): (String,String,String,String,Int) = {
