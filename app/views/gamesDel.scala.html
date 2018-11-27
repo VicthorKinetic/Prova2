@@ -1,0 +1,20 @@
+@(dForm: Form[Delete])(implicit request: RequestHeader, messagesProvider: MessagesProvider)
+
+@if(dForm.hasGlobalErrors) {
+  <ul>
+  @for(error <- dForm.globalErrors) {
+    <li>@error.format</li>
+  }
+  </ul>
+}
+
+@import helper._
+
+@helper.form(action = routes.GamesController.delete()) {
+  <!-- CROSS-SITE REQUEST FORGERY -->
+  @CSRF.formField
+  @helper.inputText(dForm("id"))
+  <button type="submit">Send</button>
+}
+
+
