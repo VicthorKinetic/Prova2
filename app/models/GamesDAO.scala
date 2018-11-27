@@ -50,6 +50,22 @@ object GamesDAO{
         }
     }
     
+    def delete(db: Database, jog: Delete): Unit = {
+        db.withConnection{ conn =>
+            val ps = conn.prepareStatement("delete from games where id= ?")
+            ps.setInt(1,jog.id)
+            ps.execute()
+        }
+    }
+    
+    def deleteUsu(db: Database, usu: GamesUsu): Unit = {
+        db.withConnection{ conn =>
+            val ps = conn.prepareStatement("delete from usuario where id= ?")
+            ps.setInt(1,usu.id)
+            ps.execute()
+        }
+    }
+    
     def getGame(db: Database, id: Int): Games = {
         db.withConnection{conn =>
             val ps = conn.prepareStatement("select * from games where id=?")
