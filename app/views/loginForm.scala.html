@@ -12,9 +12,33 @@
 
 @helper.form(action = routes.LoginController.auth()) {
   <!-- CROSS-SITE REQUEST FORGERY -->
+  
+  <!DOCTYPE html>
+  <html>
+    <head>
+       <link rel="stylesheet" href="css/style.css">
+    </head>
+    
+    <body>
+      
   @CSRF.formField                     
   @helper.inputText(dForm("email")) 
   @helper.inputPassword(dForm("senha")) 
-  <button type="submit">Send</button>
+  
+  
+    <div class="wrapper">
+          <div class="btn"> 
+          <form method="get" action="/games">
+                <button type="submit" name="" value="" class="css3button">Logar</button>
+            </form>
+          </div>
+        </div>
+        
+        
+        </body>
+    
+    
+    
+  </html>
 }
 
