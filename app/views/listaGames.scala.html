@@ -1,7 +1,15 @@
 @(list:Seq[Games])
  
 @main("ListaGames") {
+<!DOCTYPE html>
+<!DOCTYPE html>
+     <link rel="stylesheet" href="css/style.css">
+    <head>
+          
+    </head>
+
     <h1>Lista de Games</h1>
+    <table width="35%" border= 2 color=black  align=center>
         <th>Jogo</th>
         <th>Desenvolvedor</th>
         <th>Genero</th>
@@ -16,4 +24,19 @@
            <td>@t.ano</td>
         </tr> 
     }
+    </table>
+    
+    <div class="wrapper">
+          <div class="btn"align = center> 
+                    <form method="get" action="/game/form">
+                                <button type="submit" name="" value="" class="css3button">Cadastrar Jogo</button>
+                            </form>
+            
+                            <form method="post" action="/logout">
+                                        <button type="submit" name="" value="" class="css3button">Logout</button>
+                                    </form>
+                        </div>
+                        </div>
+    
+    </html>
 }
