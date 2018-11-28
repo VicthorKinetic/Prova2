@@ -11,9 +11,31 @@
 @import helper._
 
 @helper.form(action = routes.GamesController.cadastro()) {
-    @CSRF.formField                     
-    @helper.inputText(dForm("nome")) 
-    @helper.inputText(dForm("email")) 
-    @helper.inputPassword(dForm("senha")) 
-    <button type="submit">Send</button>
+  <!DOCTYPE html>
+  <html>
+    
+    <head>
+        <link rel="stylesheet" href="css/main.css">      
+    </head>
+    
+    
+    <body>
+      
+      <h1> Crie seu usuario </h1>
+      
+          @CSRF.formField                     
+          @helper.inputText(dForm("nome")) 
+          @helper.inputText(dForm("email")) 
+          @helper.inputPassword(dForm("senha")) 
+          
+          <div class="wrapper">
+          <div class="btn"> 
+          <form method="get" action="/games">
+                <button type="submit" name="" value="" class="css3button">Cadastrar</button>
+            </form>
+          </div>
+        </div>
+    </body>
+    
+  </html>
 }
