@@ -2,7 +2,11 @@
  
 @main("ListaGames") {
     <h1>Lista de Games</h1>
-    <table>
+        <th>Jogo</th>
+        <th>Desenvolvedor</th>
+        <th>Genero</th>
+        <th>Plataforma</th>
+        <th>Ano</th>
     @for(t <- list) {
         <tr>
            <td>@t.nome</td>
@@ -12,5 +16,4 @@
            <td>@t.ano</td>
         </tr> 
     }
-    </table>
 }

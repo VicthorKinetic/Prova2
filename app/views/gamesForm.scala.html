@@ -11,12 +11,9 @@
 @import helper._
 
 @helper.form(action = routes.GamesController.cadastro()) {
-  <!-- CROSS-SITE REQUEST FORGERY -->
-  @CSRF.formField                     
-  @helper.inputText(dForm("nome")) 
-  @helper.inputText(dForm("email")) 
-  @helper.inputPassword(dForm("senha")) 
-  <button type="submit">Send</button>
+    @CSRF.formField                     
+    @helper.inputText(dForm("nome")) 
+    @helper.inputText(dForm("email")) 
+    @helper.inputPassword(dForm("senha")) 
+    <button type="submit">Send</button>
 }
-
-

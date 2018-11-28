@@ -59,7 +59,7 @@ class LoginController @Inject()(db: Database, cc: ControllerComponents)
       login => {
         val estaLogado = GamesDAO.autenticar(db,login)
         if(estaLogado){
-           Redirect("/").withSession("games" -> login.email)   
+           Redirect("/games").withSession("games" -> login.email)   
         }else{
            Redirect("/login")
         }
@@ -94,7 +94,7 @@ class LoginController @Inject()(db: Database, cc: ControllerComponents)
   }
   
   def logout = Action {implicit request =>
-    Redirect("/").withSession(request.session - "games")
+    Redirect("/games").withSession(request.session - "games")
   }
 
   

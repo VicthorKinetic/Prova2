@@ -12,13 +12,10 @@
 
 @helper.form(action = routes.GamesController.create()) {
   <!-- CROSS-SITE REQUEST FORGERY -->
-  @CSRF.formField
-  @helper.inputText(dForm("nome"))
-  @helper.inputText(dForm("desenvolvedor"))
-  @helper.inputText(dForm("genero"))
-  @helper.inputText(dForm("plataforma"))
-  @helper.inputText(dForm("ano"))
-  <button type="submit">Send</button>
+    @CSRF.formField
+    @helper.inputText(dForm("nome"))
+    @helper.inputText(dForm("desenvolvedor"))
+    @helper.inputText(dForm("genero"))
+    @helper.inputText(dForm("plataforma"))
+    @helper.inputText(dForm("ano"))
 }
-
-
