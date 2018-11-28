@@ -12,10 +12,48 @@
 
 @helper.form(action = routes.GamesController.create()) {
   <!-- CROSS-SITE REQUEST FORGERY -->
-    @CSRF.formField
-    @helper.inputText(dForm("nome"))
-    @helper.inputText(dForm("desenvolvedor"))
-    @helper.inputText(dForm("genero"))
-    @helper.inputText(dForm("plataforma"))
-    @helper.inputText(dForm("ano"))
+  <!DOCTYPE html>
+  <html>
+    <head>
+       <link rel="stylesheet" href="css/style.css">
+    </head>
+    
+    <body>
+      
+      
+      
+      <div>
+        
+          @CSRF.formField
+          @helper.inputText(dForm("nome"))
+          @helper.inputText(dForm("desenvolvedor"))
+          @helper.inputText(dForm("genero"))
+          @helper.inputText(dForm("plataforma"))
+          @helper.inputText(dForm("ano"))
+        
+      </div>
+      
+        <div class="wrapper">
+          <div class="btn"> 
+          <form method="get" action="/games">
+                <button type="submit" name="" value="" class="css3button">Cadastrar Jogo</button>
+          </form>
+          </div>
+        </div>
+        
+
+      
+    </body>
+    
+    
+    
+  </html>
+  
+  
+  
+  
+
+  
+
+  
 }
